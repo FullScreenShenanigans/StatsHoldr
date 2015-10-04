@@ -172,11 +172,12 @@ module ItemsHoldr {
         retrieveLocalStorage(): void {
             var value: any = localStorage.getItem(this.ItemsHolder.getPrefix() + this.key);
 
-            switch (value) {
-                case "undefined":
-                    return undefined;
-                case "null":
-                    return null;
+            if (value === "undefined") {
+                return undefined;
+            }
+
+            if (value === "null") {
+                return null;
             }
 
             if (value.constructor !== String) {

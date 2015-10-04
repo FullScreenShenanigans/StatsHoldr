@@ -8,6 +8,8 @@ module ItemsHoldr {
     "use strict";
 
     export class ItemValue implements IItemValue {
+        value: any;
+
         element: HTMLElement;
 
         hasElement: boolean;
@@ -34,13 +36,7 @@ module ItemsHoldr {
 
         onMaximum: Function;
 
-        transformGet: Function;
-
-        transformSet: Function;
-
         storeLocally: boolean;
-
-        private value: any;
 
         /**
          * Creates a new ItemValue with the given key and settings. Defaults are given
@@ -87,33 +83,6 @@ module ItemsHoldr {
         }
 
         /**
-         * Retrieves the value being stored. If there is a transformGet, it is applied.
-         * 
-         * @return {Mixed}
-         */
-        getValue(): any {
-            if (this.transformGet) {
-                return this.transformGet(this.value);
-            }
-
-            return this.value;
-        }
-
-        /**
-         * Sets the value being stored. If there is a transformSet, it is applied.
-         * @param {Mixed} value   The new value to store.
-         */
-        setValue(value: any): void {
-            if (this.transformSet) {
-                this.value = this.transformSet(value);
-            } else {
-                this.value = value;
-            }
-
-            this.update();
-        }
-
-        /**
          * General update Function to be run whenever the internal value is changed.
          * It runs all the trigger, modular, etc. checks, updates the HTML element
          * if there is one, and updates localStorage if needed.
@@ -152,6 +121,8 @@ module ItemsHoldr {
         /**
          * Checks if the current value should trigger a callback, and if so calls 
          * it.
+         * 
+         * @this {ItemValue}
          */
         checkTriggers(): void {
             if (this.triggers.hasOwnProperty(this.value)) {
@@ -163,6 +134,8 @@ module ItemsHoldr {
          * Checks if the current value is greater than the modularity (assuming
          * modular is a non-zero Numbers), and if so, continuously reduces value and 
          * calls this.onModular.
+         * 
+         * @this {ItemValue}
          */
         checkModularity(): void {
             if (this.value.constructor !== Number || !this.modularity) {
@@ -179,6 +152,8 @@ module ItemsHoldr {
 
         /**
          * Updates the ItemValue's element's second child to be the ItemValue's value.
+         * 
+         * @this {ItemValue}
          */
         updateElement(): void {
             if (this.ItemsHolder.hasDisplayChange(this.value)) {
@@ -199,6 +174,10 @@ module ItemsHoldr {
 
             if (value === "undefined") {
                 return undefined;
+            }
+
+            if (value === "null") {
+                return null;
             }
 
             if (value.constructor !== String) {
@@ -228,6 +207,8 @@ module ItemsHoldr {
      * such as setting, increasing/decreasing, and default values are all abstracted
      * automatically. ItemValues are stored in memory as well as in localStorage for
      * fast lookups.
+     * 
+     * @author "Josh Goldberg" <josh@fullscreenmario.com>
      */
     export class ItemsHoldr implements IItemsHoldr {
         /**
@@ -270,6 +251,7 @@ module ItemsHoldr {
          */
         private container: HTMLElement;
 
+        // An Array of elements as createElement arguments, outside-to-inside.
         /**
          * An Array of elements as createElement arguments, outside-to-inside.
          */
@@ -425,7 +407,7 @@ module ItemsHoldr {
         getItem(key: string): any {
             this.checkExistence(key);
 
-            return this.items[key].getValue();
+            return this.items[key].value;
         }
 
         /**
@@ -454,7 +436,7 @@ module ItemsHoldr {
 
             for (i in this.items) {
                 if (this.items.hasOwnProperty(i)) {
-                    output[i] = this.items[i].getValue();
+                    output[i] = this.items[i].value;
                 }
             }
 
@@ -531,7 +513,8 @@ module ItemsHoldr {
         setItem(key: string, value: any): void {
             this.checkExistence(key);
 
-            this.items[key].setValue(value);
+            this.items[key].value = <string>value;
+            this.items[key].update();
         }
 
         /**
@@ -544,11 +527,8 @@ module ItemsHoldr {
         increase(key: string, amount: number | string = 1): void {
             this.checkExistence(key);
 
-            var value: any = this.items[key].getValue();
-
-            value += amount;
-
-            this.items[key].setValue(value);
+            this.items[key].value += arguments.length > 1 ? amount : 1;
+            this.items[key].update();
         }
 
         /**
@@ -561,26 +541,19 @@ module ItemsHoldr {
         decrease(key: string, amount: number = 1): void {
             this.checkExistence(key);
 
-            var value: any = this.items[key].getValue();
-
-            value -= amount;
-
-            this.items[key].setValue(value);
+            this.items[key].value -= amount;
+            this.items[key].update();
         }
 
         /**
-         * Toggles whether a value is true or false.
+         * Toggles whether a value is 1 or 0.
          * 
          * @param {String} key   The key of the ItemValue.
          */
         toggle(key: string): void {
             this.checkExistence(key);
-
-            var value: any = this.items[key].getValue();
-
-            value = value ? false : true;
-
-            this.items[key].setValue(value);
+            this.items[key].value = this.items[key].value ? 0 : 1;
+            this.items[key].update();
         }
 
         /**

@@ -132,7 +132,7 @@ export class ItemValue implements IItemValue {
                 this.update();
             } else {
                 // Otherwise save the new version to memory
-                this.updateLocalStorage();
+                this.updateLocalStorage(true);
             }
         }
     }
@@ -265,9 +265,9 @@ export class ItemValue implements IItemValue {
      * @returns {Mixed}
      */
     private retrieveLocalStorage(): any {
-        const value: any = localStorage.getItem(this.ItemsHolder.getPrefix() + this.key);
+        const value: any = this.ItemsHolder.getLocalStorage()[this.ItemsHolder.getPrefix() + this.key];
 
-        if (value === "undefined") {
+        if (!value) {
             return undefined;
         }
 

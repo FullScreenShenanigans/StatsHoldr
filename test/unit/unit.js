@@ -17,6 +17,7 @@ var sources = (function () {
 var tests = {
     "ItemValue": [
         "setValue",
+        "update",
         "checkTriggers",
         "checkModularity",
         "updateElement",
@@ -24,10 +25,17 @@ var tests = {
         "retrieveLocalStorage"
     ],
     "ItemsHoldr": [
-        "_",
         "addItem",
         "removeItem",
-        "clear"
+        "clear",
+        "increase",
+        "decrease",
+        "toggle",
+        "checkExistence",
+        "saveItem",
+        "saveAll",
+        "proliferate",
+        "resetItemsToDefaults"
     ]
 };
 

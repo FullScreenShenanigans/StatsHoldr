@@ -10,7 +10,7 @@ define(["mocks"], function (mocks) {
             expect(item.getValue()).to.equal("blue");
         });
 
-        it("respects transformSet", function () {
+        it("calls transformSet", function () {
             var item = mocks.mockItemValue(mocks.mockItemsHoldr(), "color", {
                 valueDefault: "red",
                 transformSet: function (value) {

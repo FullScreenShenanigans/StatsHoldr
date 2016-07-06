@@ -2,7 +2,7 @@ define(["mocks"], function (mocks) {
     return function () {
         var expect = require("chai").expect;
 
-        it("chooses the correct value to update textContext with", function () {
+        it("updates off ItemsHolder display change", function () {
             var item = mocks.mockItemValue(mocks.mockItemsHoldr(
                 {
                     displayChanges: {
@@ -21,7 +21,7 @@ define(["mocks"], function (mocks) {
             expect(item.element.children[1].textContent).to.equal("rainbow");
         });
 
-        it("chooses the correct value to update textContext with", function () {
+        it("updates off the current value", function () {
             var item = mocks.mockItemValue(
                 mocks.mockItemsHoldr(),
                 "color",

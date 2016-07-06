@@ -301,11 +301,11 @@ export class ItemsHoldr implements IItemsHoldr {
     }
 
     /**
-     * Increases the value for the ItemValue under the given key, via addition for
+     * Decreases the value for the ItemValue under the given key, via addition for
      * Numbers or concatenation for Strings.
      * 
      * @param key   The key of the ItemValue.
-     * @param amount   The amount to increase by (by default, 1).
+     * @param amount   The amount to decrease by (by default, 1).
      */
     public decrease(key: string, amount: number = 1): void {
         this.checkExistence(key);

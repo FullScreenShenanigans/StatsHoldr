@@ -2,7 +2,7 @@ define(["mocks"], function (mocks) {
     return function () {
         var expect = require("chai").expect;
 
-        it("with a false overrideAutoSave value, does not update localStorage", function () {
+        it("does not update localStorage with a false overrideAutoSave value", function () {
             var item = mocks.mockItemValue(mocks.mockItemsHoldr(), "color", {valueDefault: "red"});
 
             item.setValue("blue")
@@ -11,11 +11,20 @@ define(["mocks"], function (mocks) {
             expect(item.retrieveLocalStorage()).to.equal(undefined);
         });
 
-        it("with a true overrideAutoSave value, updates localStorage", function () {
+        it("updates localStorage with a true overrideAutoSave value", function () {
             var item = mocks.mockItemValue(mocks.mockItemsHoldr(), "color", {valueDefault: "red"});
 
             item.setValue("blue")
             item.updateLocalStorage(true);
+
+            expect(item.retrieveLocalStorage()).to.equal("blue");
+        });
+
+        it("updates localStorage when autoSave is enabled", function () {
+            var item = mocks.mockItemValue(mocks.mockItemsHoldr({ autoSave: true }), "color", {valueDefault: "red"});
+
+            item.setValue("blue")
+            item.updateLocalStorage();
 
             expect(item.retrieveLocalStorage()).to.equal("blue");
         });

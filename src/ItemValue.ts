@@ -155,7 +155,7 @@ export class ItemValue implements IItemValue {
      * @param value   The desired value to now store.
      */
     public setValue(value: any): void {
-        if (this.transformSet) {
+        if (this.hasOwnProperty("transformSet")) {
             this.value = this.transformSet(value);
         } else {
             this.value = value;
@@ -264,7 +264,7 @@ export class ItemValue implements IItemValue {
      * 
      * @returns {Mixed}
      */
-    private retrieveLocalStorage(): void {
+    private retrieveLocalStorage(): any {
         const value: any = localStorage.getItem(this.ItemsHolder.getPrefix() + this.key);
 
         if (value === "undefined") {

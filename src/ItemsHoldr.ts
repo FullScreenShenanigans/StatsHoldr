@@ -1,4 +1,4 @@
-import { IItemsHoldr, IItemsHoldrSettings } from "./IItemsHoldr";
+import { IItemsHoldr, IItemsHoldrSettings, IItems } from "./IItemsHoldr";
 import { IItemValue, IItemValueDefaults } from "./IItemValue";
 import { ItemValue } from "./ItemValue";
 
@@ -15,9 +15,7 @@ export class ItemsHoldr implements IItemsHoldr {
     /**
      * The ItemValues being stored, keyed by name.
      */
-    private items: {
-        [i: string]: IItemValue
-    };
+    private items: IItems;
 
     /**
      * A listing of all the String keys for the stored items.
@@ -102,7 +100,7 @@ export class ItemsHoldr implements IItemsHoldr {
                     "className": this.prefix + "_container"
                 }]
             ];
-            this.container = this.makeContainer(settings.containersArguments);
+            this.container = this.makeContainer(this.containersArguments);
         }
     }
 
@@ -255,6 +253,7 @@ export class ItemsHoldr implements IItemsHoldr {
         this.itemKeys.splice(this.itemKeys.indexOf(key), 1);
 
         delete this.items[key];
+        delete this.localStorage[this.prefix + key];
     }
 
     /**
@@ -595,13 +594,11 @@ export class ItemsHoldr implements IItemsHoldr {
      */
     private resetItemsToDefaults(): void {
         this.items = {};
+        this.itemKeys = [];
 
         if (!this.settings.values) {
-            this.itemKeys = [];
             return;
         }
-
-        this.itemKeys = Object.keys(this.settings.values);
 
         for (let key in this.settings.values) {
             if (this.settings.values.hasOwnProperty(key)) {

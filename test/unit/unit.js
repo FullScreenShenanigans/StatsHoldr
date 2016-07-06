@@ -16,10 +16,18 @@ var sources = (function () {
 
 var tests = {
     "ItemValue": [
-        "_"
+        "setValue",
+        "checkTriggers",
+        "checkModularity",
+        "updateElement",
+        "updateLocalStorage",
+        "retrieveLocalStorage"
     ],
     "ItemsHoldr": [
-        "_"
+        "_",
+        "addItem",
+        "removeItem",
+        "clear"
     ]
 };
 

@@ -18,6 +18,12 @@ define(["ItemsHoldr", "ItemValue"], function (ItemsHoldrModule, ItemValueModule)
          */
         mockItemsHoldr: function (settings) {
             return new ItemsHoldr(settings);
+        },
+        /**
+         * @returns An object with a valueDefault property for ItemValue object instantiation.
+         */
+        mockItemValueSettings: function () {
+            return { valueDefault: "red" };
         }
     };
 

@@ -4,14 +4,16 @@ define(["ItemsHoldr", "ItemValue"], function (ItemsHoldrModule, ItemValueModule)
 
     var mocks = {
         /**
+         * @param [ItemsHoldrObject]   ItemsHoldr object.
+         * @param [key]   Key for the item.
          * @param [settings]   Settings for the ItemValue.
          * @returns An ItemValue instance.
          */
-        mockItemValue: function (IH, key, settings) {
-            return new ItemValue(IH, key, settings);
+        mockItemValue: function (ItemsHoldrObject, key, settings) {
+            return new ItemValue(ItemsHoldrObject, key, settings);
         },
         /**
-         * @param [settings]   Settings for the ItemValue.
+         * @param [settings]   Settings for the ItemsHoldr.
          * @returns An ItemsHoldr instance.
          */
         mockItemsHoldr: function (settings) {

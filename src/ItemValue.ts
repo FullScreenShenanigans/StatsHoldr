@@ -132,7 +132,7 @@ export class ItemValue implements IItemValue {
                 this.update();
             } else {
                 // Otherwise save the new version to memory
-                this.updateLocalStorage(true);
+                this.updateLocalStorage();
             }
         }
     }
@@ -155,7 +155,7 @@ export class ItemValue implements IItemValue {
      * @param value   The desired value to now store.
      */
     public setValue(value: any): void {
-        if (this.hasOwnProperty("transformSet")) {
+        if (this.transformSet) {
             this.value = this.transformSet(value);
         } else {
             this.value = value;

@@ -3,6 +3,7 @@ define(["mocks"], function (mocks) {
         var expect = require("chai").expect;
 
         it("clears contents from container", function () {
+            // Arrange
             var ItemsHolder = mocks.mockItemsHoldr({
                 doMakeContainer: true,
                 values: {
@@ -14,8 +15,10 @@ define(["mocks"], function (mocks) {
                 }
             });
 
+            // Act
             ItemsHolder.clear();
 
+            // Assert
             expect(ItemsHolder.container.hasChildNodes()).to.equal(false);
         });
     };

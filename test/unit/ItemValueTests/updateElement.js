@@ -3,10 +3,11 @@ define(["mocks"], function (mocks) {
         var expect = require("chai").expect;
 
         it("updates off ItemsHolder display change", function () {
+            // Arrange
             var item = mocks.mockItemValue(mocks.mockItemsHoldr(
                 {
                     displayChanges: {
-                        "red": "rainbow"
+                        red: "rainbow"
                     }
                 }),
                 "color",
@@ -16,12 +17,15 @@ define(["mocks"], function (mocks) {
                     element: {}
                 });
 
+            // Act
             item.updateElement();
 
+            // Asert
             expect(item.element.children[1].textContent).to.equal("rainbow");
         });
 
         it("updates off the current value", function () {
+            // Arrange
             var item = mocks.mockItemValue(
                 mocks.mockItemsHoldr(),
                 "color",
@@ -31,8 +35,10 @@ define(["mocks"], function (mocks) {
                     element: {}
                 });
 
+            // Act
             item.updateElement();
 
+            // Asert
             expect(item.element.children[1].textContent).to.equal("red");
         });
     }

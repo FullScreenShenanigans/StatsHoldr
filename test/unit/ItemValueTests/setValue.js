@@ -3,14 +3,18 @@ define(["mocks"], function (mocks) {
         var expect = require("chai").expect;
 
         it("overwrites the current value", function () {
-            var item = mocks.mockItemValue(mocks.mockItemsHoldr(), "color", {valueDefault: "red"});
+            // Arrange
+            var item = mocks.mockItemValue(mocks.mockItemsHoldr(), "color", { valueDefault: "red" });
 
+            // Act
             item.setValue("blue");
 
+            // Assert
             expect(item.getValue()).to.equal("blue");
         });
 
         it("calls transformSet", function () {
+            // Arrange
             var item = mocks.mockItemValue(mocks.mockItemsHoldr(), "color", {
                 valueDefault: "red",
                 transformSet: function (value) {
@@ -18,8 +22,10 @@ define(["mocks"], function (mocks) {
                 }
             });
 
+            // Act
             item.setValue("blue");
 
+            // Assert
             expect(item.getValue()).to.equal("blue_transformed");
         });
     };

@@ -3,6 +3,7 @@ define(["mocks"], function (mocks) {
         var expect = require("chai").expect;
 
         it("switches to the opposite boolean value", function () {
+            // Arrange
             var ItemsHolder = mocks.mockItemsHoldr({
                 values: {
                     alive: {
@@ -11,8 +12,10 @@ define(["mocks"], function (mocks) {
                 }
             });
 
+            // Act
             ItemsHolder.toggle("alive");
 
+            // Assert
             expect(ItemsHolder.getItem("alive")).to.equal(false);
         });
     };

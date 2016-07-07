@@ -3,6 +3,7 @@ define(["mocks"], function (mocks) {
         var expect = require("chai").expect;
 
         it("subtracts from a Number type value", function () {
+            // Arrange
             var ItemsHolder = mocks.mockItemsHoldr({
                 values: {
                     weight: {
@@ -11,8 +12,10 @@ define(["mocks"], function (mocks) {
                 }
             });
 
+            // Act
             ItemsHolder.decrease("weight", 3);
 
+            // Assert
             expect(ItemsHolder.getItem("weight")).to.equal(97);
         });
     };

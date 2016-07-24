@@ -16,6 +16,6 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "gulp-shenanigans": "^0.2.3"
+    "gulp-shenanigans": "^0.3.0"
   }
 }
